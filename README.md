@@ -23,6 +23,9 @@ Para conseguirlo se implementaron distintos mecanismos de protección:
 * modo seguro ante fallos persistentes (intento de recuperación; en caso de fallo persistente, apagado automático)
 * apagado definitivo cuando no puede garantizarse un funcionamiento fiable (o cuando termina el ciclo de funcionamiento)
 
+El esquema de la máquina de estados está disponible aquí: [Máquina de estados](Docs/Programa_Arduino_(UML).pdf)
+El programa completo para Arduino IDE está en: [Programa](firmware/Firmware_controlador_humedad/Firmware_controlador_humedad.ino)
+
 Además, el sistema nunca sustituye el control manual del usuario. El extractor continúa estando gobernado en última instancia por el interruptor de la instalación, de modo que siempre puede desconectarse manualmente independientemente del estado del controlador.
 
 #### Instalación
@@ -30,14 +33,16 @@ Además, el sistema nunca sustituye el control manual del usuario. El extractor 
 ![Sensor instalado](Images/Sensor_montado.jpg)
 
 El proyecto se integra aprovechando la instalación existente. La fuente de alimentación se encuentra en la caja de derivación del circuito de alumbrado. El controlador (Arduino y relé) está instalado sobre el falso techo, aprovechando el hueco del foco del baño. El sensor DHT22 está situado junto al punto de luz para medir la humedad ambiente. Debe colocarse lo más cerca posible del controlador para evitar ruido eléctrico (el protocolo one-wire es sensible a cables muy largos).  El extractor permanece conectado al interruptor manual existente, utilizándose el controlador únicamente para automatizar su desconexión. Ambos controladores (interruptor y relé) están conectados en serie, de forma que es necesario que ambos coincidan para el encendido, pero cualquiera de los dos puede apagarlo. Hay un esquema eléctrico adjunto. El objetivo fue integrar el sistema sin modificar la apariencia del baño ni añadir elementos visibles, con la única excepción del sensor de humedad relativa y temperatura, que, por su funcionamiento, debe quedar a la vista.
+El esquema de la instalación eléctrica está disponible aquí: [Esquema](Docs/Esquema_de_instalación.pdf)
 
 ### Resultado
 
 El comportamiento obtenido es considerablemente más natural que el de un temporizador convencional. El extractor permanece funcionando únicamente el tiempo necesario para reducir la humedad y se adapta automáticamente a la duración e intensidad de cada uso del baño. Aunque se trata de un proyecto doméstico, se diseñó aplicando criterios habituales en sistemas embebidos, prestando especial atención a la gestión de errores, la robustez y la seguridad de funcionamiento.
 
-Los resultados están recogidos en la hoja de cálculo adjunta, en la que se muestran los siguientes datos:
+Los resultados están recogidos en la hoja de cálculo adjunta: [Hoja de resultados](data/Data.xlsx)
+En ésta se muestran los siguientes datos:
 
-* En el primer libro, dos pruebas en condiciones idénticas. Una de ellas (prueba A) muestra la evolución de la humedad con ventilación natural. La otra (prueba B) muestra la evolución en las mismas condiciones, esta vez con el extractor funcionando. Ambas pruebas terminan cuando los valores de humedad son aceptables (el mismo valor para ambas pruebas).
+* En el primer libro, dos pruebas en condiciones idénticas. Una de ellas (prueba A) muestra la evolución de la humedad con ventilación natural. La otra (prueba B) muestra la evolución en las mismas condiciones, esta vez con el extractor funcionando. Ambas pruebas terminan cuando los valores de humedad son aceptables (el mismo valor para ambas pruebas). Las condiciones iniciales de ambas pruebas están disponibles en [Condiciones iniciales](Docs/Metodología_para_la_prueba.txt)
 * En el segundo libro, una ducha real en condiciones convencionales. Se muestran, además de la evolución de las humedades relativa y absoluta y la evolución de la temperatura, el estado del controlador. Esta gráfica incluye número de errores, de lecturas repetidas y estado de la máquina de estados (esperando o evaluando).
 * En el tercer libro, de nuevo, una ducha real, esta vez tras unas semanas de uso. En este caso, el controlador se vio obligado a retornar a la etapa de espera tras detectar un aumento de humedad. Se aprecian también en este ejemplo los errores del sensor. Durante esta prueba, 10 de los 130 ciclos de medición presentaron al menos una lectura no válida (7,69 % de los ciclos). Dado que cada ciclo se compone de seis lecturas de sensor independientes, la probabilidad estimada de que una lectura individual falle es de aproximadamente el 1,3 %.
 
@@ -45,7 +50,7 @@ Los resultados están recogidos en la hoja de cálculo adjunta, en la que se mue
 ![Gráfica 2](Images/Evolución_de_humedad_absoluta.jpg)
 ![Gráfica 3](Images/Evolución_humedad_y_temperatura.jpg)
 
-Para transformar los datos del controlador en información interpretable por Excel, hay un script de Python que transforma documentos de texto con el formato de la salida del monitor serie en documentos tipo csv.
+Para transformar los datos del controlador en información interpretable por Excel, hay un script de Python que transforma documentos de texto con el formato de la salida del monitor serie en documentos tipo csv. [Script](Scripts/Serial_to_csv.py)
 
 #### Limitaciones y posibles mejoras
 
