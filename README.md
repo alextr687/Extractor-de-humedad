@@ -1,12 +1,5 @@
 # Controlador autónomo para extractor de humedad
 
-## Índice
-
-- [Diseño](#diseño)
-- [Instalación](#instalación)
-- [Resultado](#resultado)
-- [Limitaciones y posibles mejoras](#limitaciones-y-posibles-mejoras)
-
 Este proyecto nació a partir de un problema muy común en los baños domésticos. Los extractores de humedad suelen conectarse en paralelo con el alumbrado principal, de modo que se activan automáticamente cada vez que alguien enciende la luz. Aunque es una solución sencilla, tiene un inconveniente evidente: el extractor funciona siempre, independientemente de si realmente es necesario.
 
 En mi caso decidí modificar la instalación para que el extractor pudiera accionarse manualmente mediante un interruptor independiente, sustituyendo el interruptor simple existente por uno doble.
