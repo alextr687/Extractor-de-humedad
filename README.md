@@ -30,7 +30,7 @@ Para conseguirlo se implementaron distintos mecanismos de protección:
 * modo seguro ante fallos persistentes (intento de recuperación; en caso de fallo persistente, apagado automático)
 * apagado definitivo cuando no puede garantizarse un funcionamiento fiable (o cuando termina el ciclo de funcionamiento)
 
-El esquema de la máquina de estados está disponible aquí: [Máquina de estados](docs/Programa_Arduino_(UML).pdf)
+El esquema de la máquina de estados está disponible aquí: [Máquina de estados](docs/Programa_Arduino_(UML).pdf). 
 El programa completo para Arduino IDE está en: [Programa](firmware/Extractor_humedad/Extractor_humedad.ino)
 
 Además, el sistema nunca sustituye el control manual del usuario. El extractor continúa estando gobernado en última instancia por el interruptor de la instalación, de modo que siempre puede desconectarse manualmente independientemente del estado del controlador.
