@@ -1,11 +1,11 @@
-# Índice
+# Controlador autónomo para extractor de humedad
 
-- Diseño
-- Instalación
-- Resultado
-- Limitaciones y posibles mejoras
+## Índice
 
-## Controlador autónomo para extractor de humedad
+- [Diseño](#diseño)
+- [Instalación](#instalación)
+- [Resultado](#resultado)
+- [Limitaciones y posibles mejoras](#limitaciones-y-posibles-mejoras)
 
 Este proyecto nació a partir de un problema muy común en los baños domésticos. Los extractores de humedad suelen conectarse en paralelo con el alumbrado principal, de modo que se activan automáticamente cada vez que alguien enciende la luz. Aunque es una solución sencilla, tiene un inconveniente evidente: el extractor funciona siempre, independientemente de si realmente es necesario.
 
@@ -17,7 +17,7 @@ El objetivo pasó entonces a ser desarrollar un temporizador cuya duración depe
 
 El proyecto consiste en el diseño de un controlador basado en Arduino capaz de gestionar automáticamente un extractor de humedad utilizando medidas de temperatura y humedad. El sistema mantiene el extractor en funcionamiento el tiempo necesario para reducir la humedad ambiental por debajo de unos umbrales configurables, evitando tanto un funcionamiento insuficiente como un consumo innecesario.
 
-### Diseño
+## Diseño
 
 Desde el principio se priorizó la robustez del sistema frente a la complejidad. Los sensores de humedad de bajo coste tienden a producir lecturas erróneas, quedar bloqueados o incluso dejar de responder, especialmente en ambientes cálidos y húmedos como un cuarto de baño. Esto es especialmente relevante en condiciones en las que la humedad tiene a condensar (es decir, que el sensor se encuentre a temperatura de rocío). Por ese motivo el controlador se diseñó siguiendo un principio sencillo: ante cualquier condición anómala, el sistema debe adoptar un comportamiento predecible y seguro.
 
@@ -35,14 +35,14 @@ El programa completo para Arduino IDE está en: [Programa](firmware/Extractor_hu
 
 Además, el sistema nunca sustituye el control manual del usuario. El extractor continúa estando gobernado en última instancia por el interruptor de la instalación, de modo que siempre puede desconectarse manualmente independientemente del estado del controlador.
 
-#### Instalación
+## Instalación
 
 ![Sensor instalado](Images/Sensor_montado.jpg)
 
 El proyecto se integra aprovechando la instalación existente. La fuente de alimentación se encuentra en la caja de derivación del circuito de alumbrado. El controlador (Arduino y relé) está instalado sobre el falso techo, aprovechando el hueco del foco del baño. El sensor DHT22 está situado junto al punto de luz para medir la humedad ambiente. Debe colocarse lo más cerca posible del controlador para evitar ruido eléctrico (el protocolo one-wire es sensible a cables muy largos).  El extractor permanece conectado al interruptor manual existente, utilizándose el controlador únicamente para automatizar su desconexión. Ambos controladores (interruptor y relé) están conectados en serie, de forma que es necesario que ambos coincidan para el encendido, pero cualquiera de los dos puede apagarlo. Hay un esquema eléctrico adjunto. El objetivo fue integrar el sistema sin modificar la apariencia del baño ni añadir elementos visibles, con la única excepción del sensor de humedad relativa y temperatura, que, por su funcionamiento, debe quedar a la vista.
 El esquema de la instalación eléctrica está disponible aquí: [Esquema](docs/Esquema_de_instalación.pdf)
 
-### Resultado
+## Resultado
 
 El comportamiento obtenido es considerablemente más natural que el de un temporizador convencional. El extractor permanece funcionando únicamente el tiempo necesario para reducir la humedad y se adapta automáticamente a la duración e intensidad de cada uso del baño. Aunque se trata de un proyecto doméstico, se diseñó aplicando criterios habituales en sistemas embebidos, prestando especial atención a la gestión de errores, la robustez y la seguridad de funcionamiento.
 
@@ -59,14 +59,14 @@ En ésta se muestran los siguientes datos:
 
 Para transformar los datos del controlador en información interpretable por Excel, hay un script de Python que transforma documentos de texto con el formato de la salida del monitor serie en documentos tipo csv. [Script](scripts/Serial_to_csv.py)
 
-#### Limitaciones y posibles mejoras
+## Limitaciones y posibles mejoras
 
 * Utiliza un DHT22, que no es un sensor industrial.
 * El Arduino Nano no es la plataforma definitiva para un producto comercial.
 * No existe registro histórico de datos.
 * Los umbrales son configurables únicamente modificando el firmware.
 
-#### Ideas
+## Ideas
 
 * PCB diseñada específicamente para el proyecto.
 * Sensor SHT31 o BME280.
