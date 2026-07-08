@@ -1,0 +1,11 @@
+Metodología para la prueba:
+Condiciones iniciales:
+- Humedad relativa inicial inferior al 50%
+- Temperatura inicial superior a 20ºC
+
+Durante los primeros 5 minutos: generación de vapor de agua con agua caliente con el ambiente cerrado
+Durante los siguientes 10 minutos: detener la generación de vapor y añadir calor con el ambiente cerrado
+Tras los primeros 15 minutos (aumentar humedad + temperatura): ventilación natural del ambiente
+
+Pruebas A: Extractor apagado durante el transcurso de toda la prueba.
+Pruebas B: Extractor encendido durante el transcurso de toda la prueba
