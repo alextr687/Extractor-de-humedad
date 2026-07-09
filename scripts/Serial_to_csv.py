@@ -43,7 +43,7 @@ def load_data(result, doc_name):
                 print("line", index, "-->", line)
                 result.append(line)
         print("Éxito al cargar")
-        return matrix
+        return result
     except Exception as error:
         print("Ha ocurrido el siguiente error", error)
         return
