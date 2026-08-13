@@ -59,6 +59,8 @@ Para transformar los datos del controlador en información interpretable por Exc
 * No existe registro histórico de datos.
 * Los umbrales son configurables únicamente modificando el firmware.
 
+En cuanto al funcionamiento del esquema tal cual está diseñado, hay un efecto que puede resultar indeseable al usuario. La mayoría de fuentes de alimentación tienen filtros en su salida compuestos por uno o varios condensadores, que alargan el tiempo que la fuente puede suministrar energía incluso cuando ya está desconectada. Esto se traduce en que el Nano puede sigue estando alimentado, y evitando activamente el encendido del extractor de humedad, cuando el usuario apaga y enciende en interruptor para reiniciar el sistema. Ocurrirá solamente si el usuario enciende el interruptor sin haber dejado tiempo suficiente para que se descarguen los condensadores de la fuente. Este problema puede solucionarse simplemente aumentando la carga de la fuente, con una o varias resistencias en paralelo, o moviendo el interruptor a la salida de la fuente, para que interrumpa solamente la alimentación del Nano.
+
 ## Ideas
 
 * PCB diseñada específicamente para el proyecto.
