@@ -68,8 +68,3 @@ En cuanto al funcionamiento del esquema tal cual está diseñado, hay un efecto 
 * Configuración mediante Bluetooth o Wi-Fi.
 * Actualización OTA (en caso de migrar a ESP32).
 * Algoritmo adaptativo según estación del año.
-
-
-## Licencia
-
-El código de este proyecto, así como el código del formato del contenido del propio proyecto, están protegidos por la [licencia MIT](/LICENSE.md). El contenido del propio proyecto está licenciado bajo la licencia [Creative Commons (4.0 International License) Attribution-NonCommercial](https://creativecommons.org/licenses/by-nc/4.0/), con las excepciones adecuadamente indicadas.
