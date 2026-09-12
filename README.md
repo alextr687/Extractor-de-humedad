@@ -16,9 +16,10 @@ Desde el principio se priorizó la robustez del sistema frente a la complejidad.
 
 Para conseguirlo se implementaron distintos mecanismos de protección:
 
-* filtrado de medidas mediante mediana (elimina outliers)
+* filtrado de medidas mediante mediana (elimina la mayoría de outliers)
 * detección de valores fuera de rango (elimina lecturas erróneas pero validadas por el sensor)
-* detección de sensor congelado (mide el tiempo de respuesta del sensor para detectar degradación)
+* control de tiempo de respuesta (mide el tiempo de respuesta del sensor para detectar degradación)
+* detección de sensor congelado (asegura que el sensor toma medidas reales y no repetidas)
 * recuperación automática mediante watchdog (incluye aviso por reinicio automático)
 * modo seguro ante fallos persistentes (intento de recuperación; en caso de fallo persistente, apagado automático)
 * apagado definitivo cuando no puede garantizarse un funcionamiento fiable (o cuando termina el ciclo de funcionamiento)
@@ -33,7 +34,7 @@ Además, el sistema nunca sustituye el control manual del usuario. El extractor 
 ![Sensor instalado](images/Sensor_montado.jpg)
 
 El proyecto se integra aprovechando la instalación existente. La fuente de alimentación se encuentra en la caja de derivación del circuito de alumbrado. El controlador (Arduino y relé) está instalado sobre el falso techo, aprovechando el hueco del foco del baño. El sensor DHT22 está situado junto al punto de luz para medir la humedad ambiente. Debe colocarse lo más cerca posible del controlador para evitar ruido eléctrico (el protocolo one-wire es sensible a cables muy largos).  El extractor permanece conectado al interruptor manual existente, utilizándose el controlador únicamente para automatizar su desconexión. Ambos controladores (interruptor y relé) están conectados en serie, de forma que es necesario que ambos coincidan para el encendido, pero cualquiera de los dos puede apagarlo. Hay un esquema eléctrico adjunto. El objetivo fue integrar el sistema sin modificar la apariencia del baño ni añadir elementos visibles, con la única excepción del sensor de humedad relativa y temperatura, que, por su funcionamiento, debe quedar a la vista.
-El esquema de la instalación eléctrica está disponible aquí: [Esquema](docs/Esquema_de_instalación.pdf)
+El esquema de la instalación eléctrica está disponible aquí: [Esquema](docs/Esquema_de_instalacion.pdf)
 
 ## Resultado
 
@@ -42,15 +43,23 @@ El comportamiento obtenido es considerablemente más natural que el de un tempor
 Los resultados están recogidos en la hoja de cálculo adjunta: [Hoja de resultados](data/Data.xlsx)
 En ésta se muestran los siguientes datos:
 
-* En el primer libro, dos pruebas en condiciones idénticas. Una de ellas (prueba A) muestra la evolución de la humedad con ventilación natural. La otra (prueba B) muestra la evolución en las mismas condiciones, esta vez con el extractor funcionando. Ambas pruebas terminan cuando los valores de humedad son aceptables (el mismo valor para ambas pruebas). Las condiciones iniciales de ambas pruebas están disponibles en [Condiciones iniciales](docs/Metodología_para_la_prueba.txt)
+* En el primer libro, dos pruebas en condiciones idénticas. Una de ellas (prueba A) muestra la evolución de la humedad con ventilación natural. La otra (prueba B) muestra la evolución en las mismas condiciones, esta vez con el extractor funcionando. Ambas pruebas terminan cuando los valores de humedad son aceptables (el mismo valor para ambas pruebas). Las condiciones iniciales de ambas pruebas están disponibles en [Condiciones iniciales](docs/Metodologia_para_la_prueba.txt)
 * En el segundo libro, una ducha real en condiciones convencionales. Se muestran, además de la evolución de las humedades relativa y absoluta y la evolución de la temperatura, el estado del controlador. Esta gráfica incluye número de errores, de lecturas repetidas y estado de la máquina de estados (esperando o evaluando).
-* En el tercer libro, de nuevo, una ducha real, esta vez tras unas semanas de uso. En este caso, el controlador se vio obligado a retornar a la etapa de espera tras detectar un aumento de humedad. Se aprecian también en este ejemplo los errores del sensor. Durante esta prueba, 10 de los 130 ciclos de medición presentaron al menos una lectura no válida (7,69 % de los ciclos). Dado que cada ciclo se compone de seis lecturas de sensor independientes, la probabilidad estimada de que una lectura individual falle es de aproximadamente el 1,3 %.
+* En el tercer libro se encuentra, de nuevo, una ducha real, esta vez tras unas semanas de uso. En este caso, el controlador se vio obligado a retornar a la etapa de espera tras detectar un aumento de humedad. Se aprecian también en este ejemplo los errores del sensor. Durante esta prueba, 10 de los 130 ciclos de medición presentaron al menos una lectura no válida (7,69 % de los ciclos). Dado que cada ciclo se compone de seis lecturas de sensor independientes, la probabilidad estimada de que una lectura individual falle es de aproximadamente el 1,3 %.
 
 ![Gráfica 1](images/Estado_del_controlador.jpg)
-![Gráfica 2](images/Evolución_de_humedad_absoluta.jpg)
-![Gráfica 3](images/Evolución_humedad_y_temperatura.jpg)
+![Gráfica 2](images/Evolucion_humedad_absoluta.jpg)
+![Gráfica 3](images/Evolucion_temperatura_y_humedad_absoluta.jpg)
 
-Para transformar los datos del controlador en información interpretable por Excel, hay un script de Python que transforma documentos de texto con el formato de la salida del monitor serie en documentos tipo csv. [Script](scripts/Serial_to_csv.py)
+Para transformar los datos del controlador en información interpretable por Excel, el siguiente parser es un script de Python que transforma documentos de texto con el formato de la salida del monitor serie en documentos tipo csv. [Script](scripts/Serial_to_csv.py)
+
+## BOM
+
+* Arduino Nano
+* DHT22 (sustituible por DHT11 o DHT21/AM2301)
+* Módulo de relé
+* Zumbador pasivo
+* Fuente de alimentación (5V, 5W)
 
 ## Limitaciones y posibles mejoras
 
@@ -59,7 +68,7 @@ Para transformar los datos del controlador en información interpretable por Exc
 * No existe registro histórico de datos.
 * Los umbrales son configurables únicamente modificando el firmware.
 
-En cuanto al funcionamiento del esquema tal cual está diseñado, hay un efecto que puede resultar indeseable al usuario. La mayoría de fuentes de alimentación tienen filtros en su salida compuestos por uno o varios condensadores, que alargan el tiempo que la fuente puede suministrar energía incluso cuando ya está desconectada. Esto se traduce en que el Nano puede sigue estando alimentado, y evitando activamente el encendido del extractor de humedad, cuando el usuario apaga y enciende en interruptor para reiniciar el sistema. Ocurrirá solamente si el usuario enciende el interruptor sin haber dejado tiempo suficiente para que se descarguen los condensadores de la fuente. Este problema puede solucionarse simplemente aumentando la carga de la fuente, con una o varias resistencias en paralelo, o moviendo el interruptor a la salida de la fuente, para que interrumpa solamente la alimentación del Nano.
+En cuanto al funcionamiento del esquema tal cual está diseñado, hay un efecto que puede resultar indeseable al usuario. La mayoría de las fuentes de alimentación tienen filtros en su salida compuestos por uno o varios condensadores, que alargan el tiempo que la fuente puede suministrar energía incluso cuando ya está desconectada. Esto se traduce en que el Nano puede sigue estando alimentado, y evitando activamente el encendido del extractor de humedad, cuando el usuario apaga y enciende en interruptor para reiniciar el sistema. Ocurrirá solamente si el usuario enciende el interruptor sin haber dejado tiempo suficiente para que se descarguen los condensadores de la fuente. Este problema puede solucionarse simplemente aumentando la carga de la fuente, con una o varias resistencias en paralelo, o moviendo el interruptor a la salida de la fuente, para que interrumpa solamente la alimentación del Nano.
 
 ## Ideas
 

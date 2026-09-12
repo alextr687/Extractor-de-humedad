@@ -30,7 +30,7 @@ Notas:
 ====================================================================*/
 /*Definición de funciones debug (capa de depuración)
 Encapsula Serial.print() con soporte de tipos y PROGMEM, eliminada completamente en compilación sin DEBUG.*/
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
   inline void debug(const char *s) {Serial.print(s);}
   inline void debug(const __FlashStringHelper *s) {Serial.print(s);}

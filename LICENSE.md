@@ -1,6 +1,6 @@
 # Licencia
 
-El código de este proyecto, así como el formato del contenido, están protegidos por la licencia MIT[^1]. Esto incluye los siguientes archivos:
+El código de este proyecto está protegido por la licencia MIT[^1]. Esto incluye los siguientes archivos:
 
 - [Código principal](firmware/Extractor_humedad/Extractor_humedad.ino)
 - [Código parser](scripts/Serial_to_csv.py)
