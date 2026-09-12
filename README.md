@@ -80,4 +80,4 @@ En cuanto al funcionamiento del esquema tal cual está diseñado, hay un efecto 
 
 [^1]: El DHT22 no utiliza el protocolo estándar 1-Wire® de Maxim/Dallas (que requiere direccionamiento de 64 bits y drenador abierto con resistencia pull-up), sino un protocolo propietario monobus de 40 bits impulsado por temporización de pulsos.
 
-[^2]: Matemáticamente $1 - (1-p)^6 = 0{,}0769 \implies p \approx 1{,}33\%$. Sin embargo, el análisis omite que en sensores DHT22 en ambientes saturados ($100\%\text{ RH}$ / temperatura de rocío) los fallos de lectura presentan dependencia temporal/correlación por saturación de la membrana, por lo que la asunción de independencia estocástica estricta no es válida sin un filtrado previo.
+[^2]: Matemáticamente 1-(1-p)^6 = 0,0769 → p ≈ 1,33%. Sin embargo, el análisis omite que en sensores DHT22 en ambientes saturados (100% HR / temperatura de rocío) los fallos de lectura presentan dependencia temporal/correlación por saturación de la membrana, por lo que la asunción de independencia estocástica estricta no es válida sin un filtrado previo. En cualquier caso, sirve como aproximación «a ojo de buen cubero».
