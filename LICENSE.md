@@ -2,7 +2,8 @@
 
 El código de este proyecto está protegido por la licencia MIT[^1]. Esto incluye los siguientes archivos:
 
-- [Código principal](firmware/Extractor_humedad/Extractor_humedad.ino)
+- [Código principal](firmware/Programa.ino)
+- [Código logger](firmware/Programa_logger.ino)
 - [Código parser](scripts/Serial_to_csv.py)
 
 Todos los demás elementos del repositorio están protegidos por la licencia [Creative Commons (4.0 International License) Attribution-NonCommercial](https://creativecommons.org/licenses/by-nc/4.0/), con las excepciones adecuadamente indicadas. Por lo tanto, el uso comercial de este material no está autorizado bajo esta licencia.
