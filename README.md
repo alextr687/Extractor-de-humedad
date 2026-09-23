@@ -27,6 +27,8 @@ Para conseguirlo se implementaron distintos mecanismos de protección:
 El esquema de la máquina de estados está disponible aquí: [Máquina de estados](docs/Programa_Arduino_(UML).pdf). 
 El programa completo para Arduino IDE está en: [Programa](firmware/Programa.ino)
 
+<!--El código llamado Programa_logger tiene exactamente la misma función, pero añade el registro de datos en una SD. Puede ser necesario especificar el pin que utiliza el módulo SD en concreto. El programa registra cada 15 segundos todas los parámetros que considera para la toma de decisiones (aproximadamente lo mismo que se imprime por monitor serie. Este registro puede ser interesante para estudios de fiabilidad a largo plazo.-->
+
 Además, el sistema nunca sustituye el control manual del usuario. El extractor continúa estando gobernado en última instancia por el interruptor de la instalación, de modo que siempre puede desconectarse manualmente independientemente del estado del controlador.
 
 ## Instalación
