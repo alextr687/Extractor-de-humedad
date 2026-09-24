@@ -254,7 +254,10 @@ void loop() {
   if (ahora - ultimo < INTERVALO) return; //Tiempo actual por debajo del intervalo (todavía no pasaron 5 segundos desde la última medida)
   ultimo = ahora;
   //Lectura y validación de datos
-  float humedad, temperatura, agua;
+  //Se inicializan las variables para evitar valores basura en el logger
+  float humedad = NAN;
+  float temperatura = NAN;
+  float agua = NAN;
   int variableError = leerSensor(humedad, temperatura, agua);
   if (variableError == 0) return; //Lectura incompleta (mediana no calculada)
   if (variableError < 0) {
@@ -272,8 +275,10 @@ void loop() {
     if (humedad > H_MAXIMA) {
         if ((humedad - prev_humedad) >= UMBRAL_AUMENTO) contadorHumedadAlta++; //Si la humedad está por encima del máximo y aumenta, incrementar contador
         //En caso contrario no hace nada (no resetea el contador si la humedad no aumenta pero sigue por encima del máximo)
+        if ((humedad - prev_humedad) < 0) contadorHumedadAlta--; //Si la humedad disminuye, disminuye el contador
+        //Puede ser interesante utilizar humedad absoluta para esta comparación
     } 
-    else contadorHumedadAlta = 0; //Si la lectura es inferior a 95, se resetea el contador (evidencia fuerte)
+    else contadorHumedadAlta = 0; //Si la lectura es inferior a 80, se resetea el contador (evidencia fuerte)
     prev_humedad = humedad;
     prev_temperatura = temperatura;
   }
