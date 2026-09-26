@@ -64,6 +64,7 @@ const int duracionesError[] PROGMEM = {200, 800, 200}; //Segunda nota larga
 #define DHTPIN 3 //Sensor de humedad y temperatura DHT22
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
+const int PIN_CS = 10; //Lector de tarjetas SD
 
 //Variables de programa
 unsigned long tiempoInicio;
@@ -260,7 +261,7 @@ void setup() {
     debugln(F("Archivo SD no disponible"));
   } else { //Guardar header
   archivo.println();
-  archivo.println("TIMESTAMP,HUM_RELATIVA,TEMPERATURA,HUM_ABSOLUTA,FALLOS,ERROR,IGUALES,ETAPA");
+  archivo.println("TIMESTAMP,HUM_RELATIVA,TEMPERATURA,HUM_ABSOLUTA,FALLOS,ERROR,IGUALES,ALTA,ETAPA");
   archivo.flush();
   }  
 }
