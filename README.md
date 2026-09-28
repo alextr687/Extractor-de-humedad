@@ -27,8 +27,6 @@ Para conseguirlo se implementaron distintos mecanismos de protección:
 El esquema de la máquina de estados está disponible aquí: [Máquina de estados](docs/Programa_Arduino_(UML).pdf). 
 El programa completo para Arduino IDE está en: [Programa](firmware/Programa.ino)
 
-<!--El código llamado Programa_logger tiene exactamente la misma función, pero añade el registro de datos en una SD. Puede ser necesario especificar el pin que utiliza el módulo SD en concreto. El programa registra cada 15 segundos todas los parámetros que considera para la toma de decisiones (aproximadamente lo mismo que se imprime por monitor serie. Este registro puede ser interesante para estudios de fiabilidad a largo plazo.-->
-
 Además, el sistema nunca sustituye el control manual del usuario. El extractor continúa estando gobernado en última instancia por el interruptor de la instalación, de modo que siempre puede desconectarse manualmente independientemente del estado del controlador.
 
 ## Instalación
@@ -55,6 +53,10 @@ En esta se muestran los siguientes datos:
 
 Para transformar los datos del controlador en información interpretable por Excel, el siguiente parser es un script de Python que transforma documentos de texto con el formato de la salida del monitor serie en documentos tipo csv. [Script](scripts/Serial_to_csv.py)
 
+El código [Programa_logger](firmware/Programa_logger.ino) tiene exactamente la misma función, pero añade el registro de datos en una SD. El programa registra cada 15 segundos los 9 parámetros que considera para la toma de decisiones (aproximadamente lo mismo que se imprime por monitor serie. Este registro puede ser interesante para estudios de fiabilidad a largo plazo. El resultado de la instalación del lector SD queda así:
+
+![Sensor y lector montados](images/Sensor_y_lector_montados.jpeg)
+
 ## BOM
 
 * Arduino Nano
@@ -62,12 +64,12 @@ Para transformar los datos del controlador en información interpretable por Exc
 * Módulo de relé
 * Zumbador pasivo
 * Fuente de alimentación (5V, 5W)
+* Lector de tarjetas micro-SD
 
 ## Limitaciones y posibles mejoras
 
 * Utiliza un DHT22, que no es un sensor industrial.
 * El Arduino Nano no es la plataforma definitiva para un producto comercial.
-* No existe registro histórico de datos.
 * Los umbrales son configurables únicamente modificando el firmware.
 
 En cuanto al funcionamiento del esquema tal cual está diseñado, hay un efecto que puede resultar indeseable al usuario. La mayoría de las fuentes de alimentación tienen filtros en su salida compuestos por uno o varios condensadores, que alargan el tiempo que la fuente puede suministrar energía incluso cuando ya está desconectada. Esto se traduce en que el Nano puede seguir estando alimentado, y evitando activamente el encendido del extractor de humedad, cuando el usuario apaga y enciende el interruptor para reiniciar el sistema. Ocurrirá solamente si el usuario enciende el interruptor sin haber dejado tiempo suficiente para que se descarguen los condensadores de la fuente. Este problema puede solucionarse simplemente aumentando la carga de la fuente, con una o varias resistencias en paralelo (lo que se conoce como *bleeder resistor*), o moviendo el interruptor a la salida de la fuente, para que interrumpa solamente la alimentación del Nano (esta última solución contraviene las buenas prácticas de eficiencia energética, pero es igualmente efectiva).
