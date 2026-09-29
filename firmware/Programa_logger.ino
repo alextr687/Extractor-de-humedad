@@ -200,7 +200,7 @@ void info(int variableError, int contadorFallos, int contadorIguales, unsigned l
   }
 }
 
-void registroDatos(int contadorFallos, int contadorIguales, unsigned long ahora, float humedad, float temperatura, float agua, int variableError) {
+void registroDatos(int contadorFallos, int contadorIguales, unsigned long ahora, float humedad, float temperatura, float agua, int variableError, int contadorAlta) {
   
   if (!archivo) { //Protección contra fallos de SD
     debug(F("Error en la tarjeta SD"));
