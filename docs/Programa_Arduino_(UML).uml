@@ -1,0 +1,54 @@
+@startuml
+title Control autónomo de ventilador - Diagrama de estados
+
+[*] --> Espera : Arranque
+
+state Espera
+Espera --> Test : Tiempo mínimo alcanzado
+note right of Espera
+  Relé ON
+  Lectura del sensor
+  Actualización de contadores
+end note
+
+state Test
+Test --> Tiempo : Tiempo máximo alcanzado
+Test --> Error : Máximo de errores\nOR Sensor congelado
+Test --> Espera : Nuevo aumento de humedad
+Test --> Humedad : Humedad por debajo de umbral
+note right of Test
+  Evaluación de humedad
+  Evaluación del tiempo
+  Evaluación de errores
+end note
+
+state Error 
+Error --> Test : Sensor recuperado\n(primer error)
+Error --> Apagado : Segundo error OR\nTiempo mínimo en modo seguro
+note right of Error
+  Modo seguro
+  Reintento del sensor
+end note
+
+state Humedad
+Humedad --> Apagado : Apagado normal
+note right of Humedad
+  Objetivo alcanzado
+end note
+
+state Tiempo
+Tiempo --> Apagado : Apagado por tiempo máximo
+note right of Tiempo
+  Aviso acústico
+end note
+
+state Apagado
+Apagado --> [*]
+note right of Apagado
+  Relé OFF
+  Watchdog OFF
+  ADC y UART OFF
+  Sleep profundo
+end note
+
+@enduml
