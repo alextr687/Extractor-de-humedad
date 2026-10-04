@@ -57,6 +57,8 @@ El código [Programa_logger](firmware/Programa_logger.ino) tiene exactamente la 
 
 ![Sensor y lector montados](images/Sensor_y_lector_montados.jpeg)
 
+Los archivos del registro están subidos, semana a semana, en la carpeta [long_term_data](long_term_data). Solamente identifican la semana del año, pero no el día ni la hora individualmente. 
+
 ## BOM
 
 * Arduino Nano
@@ -81,6 +83,7 @@ En cuanto al funcionamiento del esquema tal cual está diseñado, hay un efecto 
 * Configuración mediante Bluetooth o Wi-Fi.
 * Actualización OTA (en caso de migrar a ESP32).
 * Algoritmo adaptativo según estación del año.
+* Segundo sensor fuera del baño, para comparar la humedad objetivo con la conseguida (en lugar de esperar indefinidamente hasta un umbral que puede ser inalcanzable). Mejor opción que el algoritmo adaptativo según la estación, pero más difícil de implementar.
 
 [^1]: El DHT22 no utiliza el protocolo estándar 1-Wire® de Maxim/Dallas (que requiere direccionamiento de 64 bits y drenador abierto con resistencia pull-up), sino un protocolo propietario monobus de 40 bits impulsado por temporización de pulsos.
 
