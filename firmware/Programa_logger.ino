@@ -293,7 +293,8 @@ void loop() {
     if (humedad > H_MAXIMA) {
         if ((humedad - prev_humedad) >= UMBRAL_AUMENTO) contadorHumedadAlta++; //Si la humedad está por encima del máximo y aumenta, incrementar contador
         //En caso contrario no hace nada (no resetea el contador si la humedad no aumenta pero sigue por encima del máximo)
-        if ((humedad - prev_humedad) < 0) contadorHumedadAlta--; //Si la humedad disminuye, disminuye el contador
+        if (((humedad - prev_humedad) < 0) && (contadorHumedadAlta > 0)) contadorHumedadAlta--; //Si la humedad disminuye, disminuye el contador
+        //El contador no puede disminuir por debajo del 0.
         //Puede ser interesante utilizar humedad absoluta para esta comparación
     } 
     else contadorHumedadAlta = 0; //Si la lectura es inferior a 80, se resetea el contador (evidencia fuerte)
