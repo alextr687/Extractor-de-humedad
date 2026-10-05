@@ -301,7 +301,7 @@ void loop() {
     prev_humedad = humedad;
     prev_temperatura = temperatura;
   }
-  registroDatos(contadorFallos, contadorIguales, ahora, humedad, temperatura, agua, variableError);
+  registroDatos(contadorFallos, contadorIguales, ahora, humedad, temperatura, agua, variableError, contadorHumedadAlta);
 
   switch (estadoActual) {
 
